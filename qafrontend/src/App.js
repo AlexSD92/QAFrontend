@@ -1,6 +1,9 @@
 import './App.css';
 import {useState, useEffect} from 'react';
 import QuestionList from './components/QuestionList';
+import Navigation from './components/Navigation';
+import Login from './components/Login';
+import {Routes, Route} from 'react-router-dom';
 
 function App() {
 
@@ -25,7 +28,12 @@ function App() {
 
   return (
     <div>
-      <QuestionList questions = {questions}/>
+      <Navigation/>
+      <Routes>
+        <Route path="/" element = {<Login/>}></Route>
+        <Route path="/questions" element = {<QuestionList questions = {questions}/>}></Route>
+      </Routes>
+      
     </div>
   )
 }
