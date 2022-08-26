@@ -1,5 +1,6 @@
 import './App.css';
 import {useState, useEffect} from 'react';
+import QuestionList from './components/QuestionList';
 
 function App() {
 
@@ -24,18 +25,9 @@ function App() {
 
   return (
     <div>
-      {questions.map(question => {
-        return (
-          <div className='container m-5'>
-            <h2><a className='link-style'>{question.question_summary}</a></h2>
-            <h6 className='badge rounded-pill bg-info'>{question.question_author}</h6>
-            <h6 className='badge rounded-pill bg-secondary'>{question.question_published}</h6>
-            <p>{question.question_details}</p>
-          </div>
-        )
-      })}
+      <QuestionList questions = {questions}/>
     </div>
-  );
+  )
 }
 
 export default App;
