@@ -3,36 +3,22 @@ import {useState, useEffect} from 'react';
 import QuestionList from './components/QuestionList';
 import Navigation from './components/Navigation';
 import Login from './components/Login';
-import {Routes, Route} from 'react-router-dom';
+import QuestionDetails from './components/QuestionDetails';
+import {Routes, Route, BrowserRouter} from 'react-router-dom';
+import RouterTest from './components/RouterTest';
 
 function App() {
-
-  const [questions, setQuestions] = useState([])
-
-  useEffect(() => {
-    fetch('https://drf-api-master.herokuapp.com/questions/questions/', {
-    method:'GET',
-    headers: {
-      'Content-Type':'application/json',
-      'Authorization':'Token 21eb499dc54e3b79dc02ebde1b9536346fb3ab40',
-    }
-  })
-  .then(resp => resp.json())
-  .then(result => {
-    setQuestions(result)
-  })
-  .catch(error => {
-    console.log(error)
-  })
-},)
 
   return (
     <div>
       <Navigation/>
       <Routes>
+        <Route path="/questions/:slug" element = {<QuestionDetails />}></Route>
+        <Route path="/questions" element = {<QuestionList />}></Route>
         <Route path="/" element = {<Login/>}></Route>
-        <Route path="/questions" element = {<QuestionList questions = {questions}/>}></Route>
+        <Route path="/routertest" element = {<RouterTest />}></Route>
       </Routes>
+
       
     </div>
   )
