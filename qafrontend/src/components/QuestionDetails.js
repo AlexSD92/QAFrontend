@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
+import axios from 'axios';
 
 // question-one-aa4ddf3d-288e-4efe-8be8-12f22c1718f9
 
@@ -11,21 +12,29 @@ function QuestionDetails() {
     const [questions, setQuestions] = useState([])
 
     useEffect(() => {
-      fetch(`https://drf-api-master.herokuapp.com/questions/questions/${params.slug}`, {
-      method:'GET',
-      headers: {
-        'Content-Type':'application/json',
-        'Authorization':'Token 21eb499dc54e3b79dc02ebde1b9536346fb3ab40',
-      }
-      })
-      .then(resp => resp.json())
-      .then(result => {
-        setQuestions(result)
-      })
-      .catch(error => {
-        console.log(error)
-      }, [params.slug])
-    },)
+      axios.get(`https://drf-api-master.herokuapp.com/questions/questions/${params.slug}`).then((response) => {
+        setQuestions(response.data);
+      });
+    }, []);
+
+    if (!questions) return null;
+
+    // useEffect(() => {
+    //   fetch(`https://drf-api-master.herokuapp.com/questions/questions/${params.slug}`, {
+    //   method:'GET',
+    //   headers: {
+    //     'Content-Type':'application/json',
+    //     'Authorization':'Token 21eb499dc54e3b79dc02ebde1b9536346fb3ab40',
+    //   }
+    //   })
+    //   .then(resp => resp.json())
+    //   .then(result => {
+    //     setQuestions(result)
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   }, [params.slug])
+    // },)
 
     return (
         <div>

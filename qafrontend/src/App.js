@@ -6,6 +6,8 @@ import Login from './components/Login';
 import QuestionDetails from './components/QuestionDetails';
 import {Routes, Route, BrowserRouter} from 'react-router-dom';
 import RouterTest from './components/RouterTest';
+import AddQuestion from './components/AddQuestion';
+import SignUpForm from './components/SignUpForm';
 
 function App() {
 
@@ -15,7 +17,9 @@ function App() {
       <Routes>
         <Route path="/questions/:slug" element = {<QuestionDetails />}></Route>
         <Route path="/questions" element = {<QuestionList />}></Route>
+        <Route path="/questions/add" element = {<AddQuestion />}></Route>
         <Route path="/" element = {<Login/>}></Route>
+        <Route path="/register" element = {<SignUpForm />}></Route>
         <Route path="/routertest" element = {<RouterTest />}></Route>
       </Routes>
 
