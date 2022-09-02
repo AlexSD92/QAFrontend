@@ -1,4 +1,4 @@
-# QAFrontend
+# 
 ##### By Alejandro Spara Dominguez
 
 ##### This project was developed for the fifth project with the Code Institute and the Full Stack Development Course. 
@@ -6,7 +6,7 @@
 ### [Click here to view the app.]()
 ##### To access the admin view you must be logged in as an admin user and enter ########################### in your browser
 
-### [Click here to view the repository.](https://github.com/AlexSD92/QAFrontend)
+### [Click here to view the repository.](https://github.com/AlexSD92/)
 
 # Table of Contents:
 
