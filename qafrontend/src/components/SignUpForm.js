@@ -36,7 +36,8 @@ const SignUpForm = () => {
     try {
       console.log(signUpData)
       await axios.post("https://ci-drf-api-qa.herokuapp.com/dj-rest-auth/registration/", signUpData);
-      history.push("/questions");
+      history("/questions");
+      // history.push("/questions");
     } catch (err) {
       setErrors(err.response?.data);
       console.log(err);

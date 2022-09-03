@@ -25,7 +25,7 @@ function SignInForm() {
     event.preventDefault();
     try {
       await axios.post("https://ci-drf-api-qa.herokuapp.com/dj-rest-auth/login/", signInData);
-      history.push("/");
+      history('/questions');
     } catch (err) {
       setErrors(err.response?.data);
     }
