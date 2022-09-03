@@ -1,10 +1,9 @@
 import './App.css';
-import {useState, useEffect} from 'react';
 import QuestionList from './components/QuestionList';
 import Navigation from './components/Navigation';
 import Login from './components/Login';
 import QuestionDetails from './components/QuestionDetails';
-import {Routes, Route, BrowserRouter} from 'react-router-dom';
+import {Routes, Route } from 'react-router-dom';
 import RouterTest from './components/RouterTest';
 import AddQuestion from './components/AddQuestion';
 import SignUpForm from './components/SignUpForm';

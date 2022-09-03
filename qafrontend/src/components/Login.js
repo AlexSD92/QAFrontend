@@ -1,86 +1,100 @@
-// import React, {useRef, useEffect, useState} from 'react';
-// import {useNavigate} from 'react-router-dom';
-// import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
-// function Credentials() {
-//     const [username,setUsername] = useState('')
-//     const [password, setPassword] = useState('')
-//     const [error, setError] = useState('')
+import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 
-//     let navigate = useNavigate()
-
-//     // const login = () => {
-//     //     fetch('https://drf-api-master.herokuapp.com/api-auth/login/', {
-//     //         method:'POST',
-//     //         headers: {
-//     //             'Content-Type':'application/json'
-//     //         },
-//     //         body:JSON.stringify({username, password})
-//     //     })
-//     //     .then(resp => resp.text())
-//     //     .then(result => {
-//     //         if(result.key === undefined) {
-//     //             setError("Invalid username or password")
-//     //             return
-
-//     //         }
-
-//     //         localStorage.setItem('mytoken', result.key)
-//     //         navigate('/articles')
-//     //     })
-//     // }
-
-//     return (
-//         <div className = "container mt-4">
-//             <br/>
-            
-//             {error ? 
-//                 <div className = "alert alert-warning alert-dismissible" role="alert">
-//                     <p>{error}</p>
-                
-//                 </div>
-
-//                 :
-
-//                 null
-        
-//             }
-
-//             <h1>Please Login Here</h1>
-
-//             <form>
-//                 <div className = "mb-3">
-//                     <input type = "text" className = "form-control" 
-//                     name = "username" placeholder="Please Enter Username"
-//                     value = {username}
-//                     onChange = {(e) => setUsername(e.target.value)}
-//                     required
-//                 />
-            
-//                 </div>
+import { Link, useNavigate } from "react-router-dom";
 
 
-//                 <div className = "mb-3">
-//                     <input type = "password" className = "form-control" 
-//                     name = "password" placeholder="Please Enter Password"
-//                     value = {password}
-//                     onChange = {(e) => setPassword(e.target.value)}
-//                     required
-//                 />
-            
-//                 </div>
+function SignInForm() {
+  const [signInData, setSignInData] = useState({
+    username: "",
+    password: "",
+  });
+  const { username, password } = signInData;
 
-//                 <div className = "mb-3">
+  const [errors, setErrors] = useState({});
 
-//                     <button onClick = {login} className = "btn btn-success">Login</button>
+  const history = useNavigate();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.post("https://ci-drf-api-qa.herokuapp.com/dj-rest-auth/login/", signInData);
+      history.push("/");
+    } catch (err) {
+      setErrors(err.response?.data);
+    }
+  };
 
-//                 </div>
-//             </form>
+  const handleChange = (event) => {
+    setSignInData({
+      ...signInData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
+  return (
+    <Row>
+      <Col className="my-auto p-0 p-md-2" md={6}>
+        <Container>
+          <h1>sign in</h1>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="username">
+              <Form.Label className="d-none">Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Username"
+                name="username"
+                value={username}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            {errors.username?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
 
-            
-//         </div>
-//     )
-// }
+            <Form.Group controlId="password">
+              <Form.Label className="d-none">Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={password}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            {errors.password?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
+            <Button
+              type="submit"
+            >
+              Sign in
+            </Button>
+            {errors.non_field_errors?.map((message, idx) => (
+              <Alert key={idx} variant="warning" className="mt-3">
+                {message}
+              </Alert>
+            ))}
+          </Form>
+        </Container>
+        <Container>
+          <Link to="/register">
+            Don't have an account? <span>Sign up now!</span>
+          </Link>
+        </Container>
+      </Col>
+    </Row>
+  );
+}
 
-// export default Login
+export default SignInForm;

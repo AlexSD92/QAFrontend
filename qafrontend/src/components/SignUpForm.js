@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-// import styles from "../../styles/SignInUpForm.module.css";
-// import btnStyles from "../../styles/Button.module.css";
-// import appStyles from "../../App.module.css";
-
 import {
   Form,
   Button,
-  Image,
   Col,
   Row,
   Container,
@@ -19,10 +14,11 @@ import axios from "axios";
 const SignUpForm = () => {
   const [signUpData, setSignUpData] = useState({
     username: "",
+    email: "",
     password1: "",
     password2: "",
   });
-  const { username, password1, password2 } = signUpData;
+  const { username, email, password1, password2 } = signUpData;
 
   const [errors, setErrors] = useState({});
 
@@ -38,10 +34,12 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("/dj-rest-auth/registration/", signUpData);
-      history.push("/signin");
+      console.log(signUpData)
+      await axios.post("https://ci-drf-api-qa.herokuapp.com/dj-rest-auth/registration/", signUpData);
+      history.push("/questions");
     } catch (err) {
       setErrors(err.response?.data);
+      console.log(err);
     }
   };
 
@@ -59,6 +57,22 @@ const SignUpForm = () => {
                 placeholder="Username"
                 name="username"
                 value={username}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            {errors.username?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+
+          <Form.Group controlId="email">
+            <Form.Label className="d-none">email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={email}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -119,13 +133,20 @@ const SignUpForm = () => {
           </Link>
         </Container>
       </Col>
-      <Col md={6}>
-        <Image
-          src={"https://codeinstitute.s3.amazonaws.com/AdvancedReact/hero2.jpg"}
-        />
-      </Col>
+
     </Row>
   );
 };
 
 export default SignUpForm;
+
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     await axios.post("https://ci-drf-api-qa.herokuapp.com/dj-rest-auth/registration/", signUpData);
+  //     history.push("/questions");
+  //   } catch (err) {
+  //     setErrors(err.response?.data);
+  //   }
+  // };
