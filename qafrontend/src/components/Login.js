@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 
 import Form from "react-bootstrap/Form";
@@ -9,9 +9,12 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
 import { Link, useNavigate } from "react-router-dom";
+import { SetCurrentUserContext } from "../App";
 
 
 function SignInForm() {
+  const setCurrentUser = useContext(SetCurrentUserContext)
+
   const [signInData, setSignInData] = useState({
     username: "",
     password: "",
@@ -24,7 +27,8 @@ function SignInForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("https://ci-drf-api-qa.herokuapp.com/dj-rest-auth/login/", signInData);
+      const {data} = await axios.post("/dj-rest-auth/login/", signInData);
+      setCurrentUser(data.user);
       history('/questions');
     } catch (err) {
       setErrors(err.response?.data);

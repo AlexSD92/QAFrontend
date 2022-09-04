@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import {useState, useEffect} from 'react';
+import CreateQuestionForm from './CreateQuestion';
+
 
 export default function QuestionList() {
 
@@ -26,6 +28,8 @@ export default function QuestionList() {
             </div>
           )
         })}
+        <CreateQuestionForm />
       </div>
     );
-}
+  }
+
